@@ -40,13 +40,15 @@ ADD /nginx/vhost-app.conf /etc/nginx/sites-available/app
 
 RUN ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
-RUN  ls -l /etc/nginx/conf.d;
-RUN  ls -l /etc/nginx/;
+# Copying configuration scripts to container
 
-# @bug problem with relative paths
-#RUN rm -rf /var/www/html
-#VOLUME /../../www /var/www/html
-#VOLUME /../../.docker/nginx/templates /etc/nginx/templates
-#RUN ls /etc/nginx/templates/snippets;
+COPY /scripts/ /usr/share/.docker/scripts
+
+RUN chmod +x /usr/share/.docker/scripts/*.sh &&\
+    mkdir -p /var/www/html &&\
+    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/ &&\
+    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/html
+
+WORKDIR /var/www/html
 
 CMD ["nginx", "-g", "daemon off;"]

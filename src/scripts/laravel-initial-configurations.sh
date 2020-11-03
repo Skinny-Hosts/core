@@ -38,9 +38,3 @@ if [[ ! -e $CONTAINER_ALREADY_STARTED && -f 'artisan' ]]; then
 else
     echo "-- Container already run, no need to be reconfigured or Laravel is not installed."
 fi
-
-echo "-- Services running";
-
-php-fpm;
-
-service php-fpm status;

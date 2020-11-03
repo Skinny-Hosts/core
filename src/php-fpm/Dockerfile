@@ -20,16 +20,5 @@ RUN apk update && apk add --no-cache shadow bash composer &&\
     install-php-extensions mysqli pdo_mysql bcmath gd &&\
     php-fpm -m
 
-COPY /scripts/ /usr/share/.docker/scripts
-
-RUN chmod +x /usr/share/.docker/scripts/*.sh &&\
-    mkdir -p /var/www/html &&\
-    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/ &&\
-    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/html
-
-WORKDIR /var/www/html
-
-USER www-data
-
 # @todo implement dynamic entrypoint
-ENTRYPOINT [ "/usr/share/.docker/scripts/laravel-initial-configurations.sh" ]
+ENTRYPOINT [ "php-fpm" ]

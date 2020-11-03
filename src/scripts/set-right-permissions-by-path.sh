@@ -12,12 +12,16 @@ if [[ ! -d "$FILE_PATH" ]]; then
     exit;
 fi;
 
+echo "Fixing permissions at ${FILE_PATH}";
+
 chmod 775 ${FILE_PATH} -R && \
 chmod 2775 ${FILE_PATH} -R && \
-chown -R www-data:www-data ${FILE_PATH} -R;
+chown -R nginx:nginx ${FILE_PATH} -R;
+
+cd ${FILE_PATH};
 
 if [[ ! -z $(ls -A .) ]]; then
-    cd ${FILE_PATH} && find * -type d -exec chmod -R 775 {} \; && find * -type f -exec chmod -R 664 {} \;
+    find * -type d -exec chmod -R 775 {} \; && find * -type f -exec chmod -R 664 {} \;
 else
     echo 'Path is empty, not running commands for children.';
 fi;

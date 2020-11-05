@@ -31,13 +31,7 @@ services:
 
   php:
 
-    build:
-      context: src
-      dockerfile: php-fpm/Dockerfile
-      args:
-        APP_ENVIROMENT: ${APP_ENVIROMENT}
-    # naming during build
-    image: skinny-hosts/core-php-web-server:${PHP_WS_VERSION}
+    image: ghcr.io/skinny-hosts/core-php-fpm-web-server:latest
     tty: true
     restart: always
     networks:

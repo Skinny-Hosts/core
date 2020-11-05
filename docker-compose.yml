@@ -7,7 +7,7 @@ services:
   nginx:
 
     build:
-      context: src
+      context: .
       dockerfile: nginx/Dockerfile
     # naming during build
     image: skinny-hosts/core-nginx-web-server:${NGINX_WS_VERSION}
@@ -20,7 +20,7 @@ services:
       - "443:443"
     volumes:
       - ./www:/var/www/html
-      - ./src/nginx/templates:/etc/nginx/templates
+      - ./nginx/templates:/etc/nginx/templates
     environment:
       - NGINX_ROOT=/var/www/html
       - NGINX_HOST=localhost

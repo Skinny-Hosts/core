@@ -22,12 +22,12 @@ services:
       - ./www:/var/www/html
       - ./nginx/templates:/etc/nginx/templates
     environment:
-      - NGINX_ROOT=/var/www/html
-      - NGINX_HOST=localhost
-      - NGINX_PORT=80
-      - PHP_HOST=php
-      - PHP_PORT=9000
-    command: bash -c 'wait4ports -q -t 60 -s 10 tcp://php:9000; /docker-entrypoint.sh nginx -g "daemon off;"'
+      - NGINX_ROOT=${NGINX_ROOT}
+      - NGINX_HOST=${NGINX_HOST}
+      - NGINX_PORT=$[NGINX_PORT]
+      - PHP_HOST=${PHP_HOST}
+      - PHP_PORT=${PHP_PORT}
+    command: bash -c 'wait4ports -q -t 60 -s 10 tcp://php:${PHP_PORT}; /docker-entrypoint.sh nginx -g "daemon off;"'
 
   php:
 
@@ -41,15 +41,15 @@ services:
     volumes:
       - ./www:/var/www/html
     environment:
-      - DB_HOST=database
-      - DB_PORT=3306
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
       - APP_ENVIROMENT=${APP_ENVIROMENT}
       - PROJECT_NAME=${COMPOSE_PROJECT_NAME}
-      - DB_USERNAME=docker
-      - DB_PASSWORD=123
-      - REDIS_HOST=''
-      - REDIS_PASSWORD=''
-      - REDIS_PORT=''
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
 
 networks:
 

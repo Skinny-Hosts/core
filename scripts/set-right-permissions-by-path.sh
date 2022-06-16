@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Script commonly used during image building to defined secure CHMOD permissions to folders and files by a given path.
 # @authors Yuri Koster, Marcos Freitas
 
 # Run as:

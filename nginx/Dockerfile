@@ -1,7 +1,7 @@
 # @version 1.0.0
 # Configures NGINX .
 
-FROM nginx:1.19-alpine
+FROM nginx:stable-alpine
 LABEL maintainer="marcosfreitas@c4network.com.br"
 
 # @todo change user to not run as root

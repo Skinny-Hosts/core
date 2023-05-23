@@ -24,7 +24,7 @@ services:
     environment:
       - NGINX_ROOT=${NGINX_ROOT}
       - NGINX_HOST=${NGINX_HOST}
-      - NGINX_PORT=$[NGINX_PORT]
+      - NGINX_PORT=${NGINX_PORT}
       - PHP_HOST=${PHP_HOST}
       - PHP_PORT=${PHP_PORT}
     command: bash -c 'wait4ports -q -t 60 -s 10 tcp://php:${PHP_PORT}; /docker-entrypoint.sh nginx -g "daemon off;"'

@@ -1,7 +1,6 @@
 # cache-directives.conf already have bypasses
 
 location ~ \.php$ {
-    #include conf.d/snippets/fastcgi-php.conf;
     include fastcgi_params;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 

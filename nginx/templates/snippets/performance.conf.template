@@ -6,13 +6,20 @@ client_header_buffer_size 2k;
 # should be equal to fastcgi param
 client_max_body_size 80M;
 
+# control the length of HTTP headers received from clients
+# <quantity of buffers> <length in bytes>;
+
 large_client_header_buffers 4 16k;
 
 # Start: Timeouts
+# allow the server to close connection on non responding client, this will free up memory
+reset_timedout_connection on;
 client_body_timeout   10;
 client_header_timeout 10;
-keepalive_timeout     15;
+keepalive_timeout     30;
 send_timeout          10;
+fastcgi_read_timeout 60;
+
 
 # Gzip Compression
 # disabled because use of ssl
@@ -29,25 +36,25 @@ gzip_types text/plain text/xml text/css application/json application/javascript 
 
 
 # Static file caching
-location ~* .(js|json)$ {
+location ~* .(txt|xml|js|json)$ {
     # Indicate that the resource may be cached by public caches like web caches for instance,
     # if set to 'private' the resource may only be cached by client's browser.
     add_header Cache-Control public;
-    # Indicate that the resource can be cached for 24 hours
+    # Indicate that the resource can be cached
     expires 24h;
 }
 
 location ~* .(css)$ {
     add_header Cache-Control public;
     # Equivalent to above:
-    # Indicate that the resource can be cached for 86400 seconds (24 hours)
-    expires 86400;
+    # Indicate that the resource can be cached
+    expires 24h;
 
     # Add an ETag header with an identifier that can be stored by the client
     etag on;
 }
 
-location ~* \.(?:ico|gif|jpe?g|png|svg|woff|woff22|ttf)$  {
+location ~* \.(?:ico|gif|jpe?g|png|webp|svg|woff|woff22|ttf)$  {
     add_header Cache-Control public;
     expires 30d;
     # Indicate that the browser can serve a compressed version of these resources

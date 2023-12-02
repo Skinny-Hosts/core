@@ -14,7 +14,7 @@ EXPOSE 80
 # @todo not prepared to work with SSL connections yet
 EXPOSE 443
 
-RUN apk update && apk add --no-cache openssl shadow bash wait4ports &&\
+RUN apk update && apk add --no-cache libc6-compat openssl shadow bash wait4ports &&\
     rm /etc/nginx/nginx.conf &&\
     rm /etc/nginx/conf.d/default.conf
 
@@ -44,7 +44,8 @@ COPY /scripts/ /usr/share/.docker/scripts
 RUN chmod +x /usr/share/.docker/scripts/*.sh &&\
     mkdir -p /var/www/html &&\
     bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/ &&\
-    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/html
+    bash /usr/share/.docker/scripts/set-right-permissions-by-path.sh /var/www/html &&\
+    bash /usr/share/.docker/scripts/install-prometheus-laravel.sh
 
 WORKDIR /var/www/html
 

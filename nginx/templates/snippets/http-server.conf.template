@@ -21,4 +21,5 @@ server {
 
 	# base configurations of virtual host
 	include conf.d/snippets/base-vhosts.conf;
+	include conf.d/snippets/http-stub-status.conf;
 }
